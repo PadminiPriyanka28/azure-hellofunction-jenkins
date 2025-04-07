@@ -9,19 +9,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'npm test'
+                bat 'npm test'
             }
         }
 
         stage('Archive') {
             steps {
-                sh 'zip -r function.zip *'
+                bat 'zip -r function.zip *'
             }
         }
 
@@ -32,7 +32,7 @@ pipeline {
                     string(credentialsId: 'azure-client-secret', variable: 'AZURE_CLIENT_SECRET'),
                     string(credentialsId: 'azure-tenant-id', variable: 'AZURE_TENANT_ID')
                 ]) {
-                    sh """
+                    bat """
                         az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
                         az functionapp deployment source config-zip \
                           --resource-group $RESOURCE_GROUP \
