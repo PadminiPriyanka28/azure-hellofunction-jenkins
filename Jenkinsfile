@@ -21,8 +21,9 @@ pipeline {
 
         stage('Archive') {
             steps {
-                // Use 7-Zip to zip the files
-                bat '"C:\\Program Files\\7-Zip\\7z.exe" a -tzip function.zip *'
+                powershell '''
+                    Compress-Archive -Path * -DestinationPath function.zip
+                '''
             }
         }
 
