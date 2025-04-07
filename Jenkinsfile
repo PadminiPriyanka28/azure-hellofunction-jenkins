@@ -22,10 +22,17 @@ pipeline {
         stage('Archive') {
             steps {
                 powershell '''
-                    Compress-Archive -Path * -DestinationPath function.zip
+                # Remove the existing function.zip if it exists
+                if (Test-Path "function.zip") {
+                    Remove-Item "function.zip"
+                }
+        
+                # Create the new function.zip file
+                Compress-Archive -Path * -DestinationPath function.zip
                 '''
             }
         }
+
 
         stage('Deploy') {
             steps {
