@@ -6,6 +6,10 @@ pipeline {
         RESOURCE_GROUP = 'AzureFunction'
     }
 
+       triggers {
+        pollSCM('H/1 * * * *')  // Poll every 1 minute
+    }
+    
     stages {
         stage('Build') {
             steps {
